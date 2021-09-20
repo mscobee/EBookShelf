@@ -46,6 +46,7 @@ public class BookShelfGUI extends JFrame{
         this.setSize(400,400);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.add(buttonPanel);
     }
     // Initialize other JPanels
@@ -57,10 +58,7 @@ public class BookShelfGUI extends JFrame{
     // the methods to allow user to select a file.
     private void setupFileButton() {
         selectFileButton = new JButton("Open File");
-        selectFileButton.addActionListener(e -> {
-            selectFile();
-            myShelf.setBookFile(currentFile);
-        });
+        selectFileButton.addActionListener(e -> selectFile());
     }
     // Uses JFileChooser to select a file.
     private void selectFile() {
@@ -70,6 +68,7 @@ public class BookShelfGUI extends JFrame{
         response = jc.showOpenDialog(null);
         if(response == JFileChooser.APPROVE_OPTION) {
             currentFile = jc.getSelectedFile();
+            myShelf.setBookFile(currentFile);
             getBookDataFromUser();
         }
     }
@@ -78,7 +77,6 @@ public class BookShelfGUI extends JFrame{
         int result = JOptionPane.showConfirmDialog(null, userInputPanel,
                 "Enter Book Data", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION) {
-            // TODO this shit breaks for some reason the currentFile is nullptr?
             myShelf.setBook(titleField.getText(), authorField.getText(), publisherField.getText());
         }
     }
