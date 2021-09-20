@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.File;
 
 public class BookShelfGUI extends JFrame{
-    private JPanel currentBooksPanel;
+
     private JPanel buttonPanel;
     private JButton selectFileButton;
     private File currentFile;
@@ -17,7 +17,6 @@ public class BookShelfGUI extends JFrame{
     private JLabel publisherFieldLabel = new JLabel("Publisher");
     private JPanel userInputPanel;
     private BookShelf myShelf = new BookShelf();
-    //
     public BookShelfGUI() {
         setupFileButton();
         initializeGUIPanels();
@@ -25,6 +24,8 @@ public class BookShelfGUI extends JFrame{
         setInputPanel();
         this.setVisible(true);
     }
+    // userInputPanel has three textfields and labels for author, publisher, and title
+    // this data is needed to create each Book object.
     private void setInputPanel() {
         userInputPanel = new JPanel(new GridLayout(3,2));
         titleField = new JTextField(20);
@@ -40,19 +41,20 @@ public class BookShelfGUI extends JFrame{
         userInputPanel.add(publisherFieldLabel);
         userInputPanel.add(publisherField);
     }
-    //
+    // Initialize JFrame
     private void initializeGUIFrame() {
         this.setSize(400,400);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.add(buttonPanel);
     }
-    //
+    // Initialize other JPanels
     private void initializeGUIPanels() {
         buttonPanel = new JPanel();
         buttonPanel.add(selectFileButton);
     }
-    //
+    // Create a fileButton and adds an action listener to the button that will call
+    // the methods to allow user to select a file.
     private void setupFileButton() {
         selectFileButton = new JButton("Open File");
         selectFileButton.addActionListener(e -> {
@@ -60,6 +62,7 @@ public class BookShelfGUI extends JFrame{
             myShelf.setBookFile(currentFile);
         });
     }
+    // Uses JFileChooser to select a file.
     private void selectFile() {
         final JFileChooser jc = new JFileChooser(".");
         int response;
@@ -70,10 +73,12 @@ public class BookShelfGUI extends JFrame{
             getBookDataFromUser();
         }
     }
+    // Gets metadata of each Book from user.
     private void getBookDataFromUser() {
         int result = JOptionPane.showConfirmDialog(null, userInputPanel,
                 "Enter Book Data", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION) {
+            // TODO this shit breaks for some reason the currentFile is nullptr?
             myShelf.setBook(titleField.getText(), authorField.getText(), publisherField.getText());
         }
     }

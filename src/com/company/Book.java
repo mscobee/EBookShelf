@@ -1,5 +1,5 @@
 package com.company;
-
+// Stores data for each book inside a Book object which will be stored into a database of Books
 public class Book {
     private String bookTitle;
     private String author;
